@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import es.udc.fi.lbd.monuzz.id.apps.model.App;
 import es.udc.fi.lbd.monuzz.id.apps.model.Cliente;
 import es.udc.fi.lbd.monuzz.id.apps.model.Programador;
 import es.udc.fi.lbd.monuzz.id.apps.model.Usuario;
@@ -19,17 +20,22 @@ public class UsuarioDaoImpl implements UsuarioDAO{
 	
 	@Override
 	public Long create(Usuario miUsuario) {
-		if (miUsuario.getIdUsuario()!=null){
-			throw new RuntimeException("Alta usuario ya persistente");
-		}
 		Long id =(Long) sessionFactory.getCurrentSession().save(miUsuario);
 		return id;
 	}
 
 	@Override
 	public void remove(Usuario miUsuario) {
-		Usuario user = (Usuario) sessionFactory.getCurrentSession().get(Usuario.class, miUsuario.getIdUsuario());
-		sessionFactory.getCurrentSession().delete(user);
+		Cliente user = (Cliente) sessionFactory.getCurrentSession().get(Cliente.class, miUsuario.getIdUsuario());
+		if(user!=null){
+			user.setApps(null);
+			sessionFactory.getCurrentSession().delete(user);
+			return;
+		}
+		Programador user2 = (Programador) sessionFactory.getCurrentSession().get(Programador.class, miUsuario.getIdUsuario());
+		if(user2!=null){
+			sessionFactory.getCurrentSession().delete(user2);
+		}
 	}
 
 	@Override

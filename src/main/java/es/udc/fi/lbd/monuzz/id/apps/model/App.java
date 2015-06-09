@@ -68,8 +68,8 @@ public class App  {
 	public Float getPrecio() {
 		return precio;
 	}
-	@ManyToOne
-	@JoinColumn(name="ID_USUARIO")
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="AUTOR")
 	public Programador getAutor() {
 		return autor;
 	}
@@ -84,7 +84,6 @@ public class App  {
 		return tipoApp;
 	}
 	@OneToMany(mappedBy="app",fetch=FetchType.LAZY,cascade={CascadeType.ALL})
-	//EN VEZ DE ALL DEBERÍA DE IR PERSIST Y REMOVE
 	public List<Version> getVersiones() {
 		return versiones;
 	}

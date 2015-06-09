@@ -28,17 +28,9 @@ public class TipoAppDaoImpl implements TipoAppDAO{
 
 	@Override
 	public void remove(TipoApp miTipo) {
-		if (miTipo.getIdTipoApp()==null){
-			throw new RuntimeException("Baja tipoapp inexistente");
-		}
 		Query query = sessionFactory.getCurrentSession().createQuery("select count(a) from App a where a.tipoApp=:iTipo");
 		query.setParameter("iTipo", miTipo);
-		Long t=(Long) query.uniqueResult();
-		if (t==0){
-			sessionFactory.getCurrentSession().delete(miTipo);
-		}else{
-			throw new RuntimeException("Baja tipo de app con apps");
-		}
+		sessionFactory.getCurrentSession().delete(miTipo);
 	}
 
 	@Override

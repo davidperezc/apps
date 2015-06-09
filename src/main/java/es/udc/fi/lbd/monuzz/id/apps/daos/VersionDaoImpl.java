@@ -34,8 +34,13 @@ public class VersionDaoImpl implements VersionDAO{
 
 	@Override
 	public void remove(Version miVersion) {
+		List<Version> v = findAllByApp(miVersion.getApp());
 		Version ver = (Version) sessionFactory.getCurrentSession().get(Version.class, miVersion.getIdVersion());
-		sessionFactory.getCurrentSession().delete(ver);
+		if (v.size()>1){
+			sessionFactory.getCurrentSession().delete(ver);
+		}else{
+			throw new RuntimeException("Error borrar version");
+		}
 	}
 
 	@Override

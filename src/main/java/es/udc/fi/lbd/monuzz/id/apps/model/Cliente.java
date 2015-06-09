@@ -46,11 +46,10 @@ public class Cliente extends Usuario {
 		return saldo;
 	}
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "CLIENTE_APP", joinColumns = { 
-			@JoinColumn(name = "ID_USUARIO", nullable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "ID_APP", 
-					nullable = false) })
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "CLIENTE_APP", 
+			joinColumns = { @JoinColumn(name = "IDCLIENTE") }, 
+			inverseJoinColumns = { @JoinColumn(name = "IDAPP") })
 	public List<App> getApps() {
 		return apps;
 	}

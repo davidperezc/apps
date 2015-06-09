@@ -38,7 +38,6 @@ public class AppDaoImpl implements AppDAO{
 	public void remove(App miApp) {
 		App app = (App) sessionFactory.getCurrentSession().get(App.class, miApp.getIdApp());
 		sessionFactory.getCurrentSession().delete(app);
-		
 	}
 
 	@Override
@@ -64,7 +63,7 @@ public class AppDaoImpl implements AppDAO{
 
 	@Override
 	public List<App> findAllByCliente(Cliente miCliente) {
-		Query query = sessionFactory.getCurrentSession().createQuery("from CLIENTE_APP c where c.ID_APP=iID");
+		Query query = sessionFactory.getCurrentSession().createQuery("select a from Cliente c join c.apps a where c.idUsuario=:iID");
 		query.setParameter("iID", miCliente.getIdUsuario());
 		List<App> l = query.list();
 		return l;
@@ -80,7 +79,7 @@ public class AppDaoImpl implements AppDAO{
 
 	@Override
 	public List<Cliente> findAllClientes(App miApp) {
-		Query query = sessionFactory.getCurrentSession().createQuery("from Cliente c join c.apps a where a.idApp=:iID");
+		Query query = sessionFactory.getCurrentSession().createQuery("select c from Cliente c join c.apps a where a.idApp=:iID");
 		query.setParameter("iID", miApp.getIdApp());
 		List<Cliente> l = query.list();
 		return l;

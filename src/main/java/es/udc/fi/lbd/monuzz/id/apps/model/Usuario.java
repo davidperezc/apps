@@ -12,7 +12,7 @@ import javax.persistence.SequenceGenerator;
 
 
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS) //O MEJOR JOINED
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Usuario {
 	
 	protected Long idUsuario;	

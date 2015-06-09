@@ -123,7 +123,7 @@ public class TestUtils {
 		cliente1 = new Cliente ("cmonuzz", "monuzz13", "Climon", "López", "Rodríguez", "Climon López", "Premium", new Float(1000));
 		cliente2 = new Cliente ("cmi", "mi13", "Climiguel", "Rodríguez", "Penabad", "Climiguel Penabad", "Normalillo", new Float(30));
 
-		//cliente1.getApps().add(app1);
+		cliente1.getApps().add(app1);
 		
 		usuarioService.registrarNuevoUsuario(cliente1);
 		usuarioService.registrarNuevoUsuario(cliente2);

@@ -68,17 +68,17 @@ public class TestUsuario {
 
 		
 		// T2. Registrar usuario duplicado
-		/*
+		
 		Boolean duplicado=false;
 		try {usuarioService.registrarNuevoUsuario(miProgramador);} 
 			catch (DataIntegrityViolationException e) {duplicado=true;}
 		assertTrue(duplicado);
-
+		
 		duplicado=false;
 		try {usuarioService.registrarNuevoUsuario(miCliente);} 
 			catch (DataIntegrityViolationException e) {duplicado=true;}
 		assertTrue(duplicado);
-		*/
+		
 		
 		// T3. Comprobamos que la autenticación funciona
 		
@@ -121,10 +121,7 @@ public class TestUsuario {
 		
 		usuarioService.borrarUsuario(miProgramadorAutenticado);
 		assertNull(usuarioService.buscarUsuarioPorId(miProgramadorAutenticado.getIdUsuario()));
-		assertNull(usuarioService.buscarUsuarioPorLogin(miProgramadorAutenticado.getNombreDeUsuario()));
-		
-		
-		
+		assertNull(usuarioService.buscarUsuarioPorLogin(miProgramadorAutenticado.getNombreDeUsuario()));	
 		
 		// T7 Probar listado de usuarios
 		
@@ -202,18 +199,18 @@ public class TestUsuario {
 		try { usuarioService.borrarVersion(miVersion); }
 			catch (Exception e) {ultimaVersion=true;}
 		assertTrue(ultimaVersion);
-		/*
-		// T6 Fallar al dar de baja aplicacion con clientes
 		
+		// T6 Fallar al dar de baja aplicacion con clientes
 		testUtils.cliente1.getApps().add(miApp);
 		usuarioService.actualizarUsuario(testUtils.cliente1);
 		assertEquals (2, usuarioService.obtenerAppsCliente(testUtils.cliente1).size());
+		
 		
 		Boolean appConClientes=false;
 		try { usuarioService.borrarApp(miApp);}
 		catch (DataIntegrityViolationException e) { appConClientes=true;}
 		assertTrue (appConClientes);
-       
+        
 		
 		// T7 Fallar al dar de baja programador con apps
 		
@@ -221,7 +218,7 @@ public class TestUsuario {
 		try {usuarioService.borrarUsuario(testUtils.programador1);}
 		catch (DataIntegrityViolationException e) { progConApps=true;}
 		assertTrue (progConApps);
-		 */
+		
 		// T8 Probar baja de cliente con apps
 		
 		Cliente miCliente = new Cliente ("clienteTest", "test13", "Nokito", "Nada", "Nada", "Nokito Nada", "Premium", new Float(5000));
@@ -229,19 +226,19 @@ public class TestUsuario {
 		miCliente.getApps().add(miApp);
 		usuarioService.actualizarUsuario(miCliente);
 		
-		//assertEquals (2, usuarioService.obtenerClientesApp(miApp).size());
+		assertEquals (2, usuarioService.obtenerClientesApp(miApp).size());
 		usuarioService.borrarUsuario(miCliente);
-		//assertEquals (1, usuarioService.obtenerClientesApp(miApp).size());
+		assertEquals (1, usuarioService.obtenerClientesApp(miApp).size());
 		
 		
 		// T9 Cancelar los clientes de una aplicación
-		/*
+		
 		assertEquals (2, usuarioService.obtenerAppsCliente(testUtils.cliente1).size());
 		assertEquals (1, usuarioService.obtenerClientesApp(miApp).size());
 		usuarioService.cancelarClientes(miApp);
 		assertEquals (1, usuarioService.obtenerAppsCliente(testUtils.cliente1).size());
 		assertEquals (0, usuarioService.obtenerClientesApp(miApp).size());
-		*/
+		
 		// T10 Eliminar app sin clientes (y sus versiones)
 		
 		usuarioService.borrarApp(miApp);

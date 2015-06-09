@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			usuarioDAO.create(miUsuario);
 			log.info("Alta usuario: " + miUsuario.toString());
 		}catch (DataAccessException e){
-			log.error("Error alta usuario: " + miUsuario.toString());
+			log.error("Error alta usuario");
 			throw e;
 		}
 	}
@@ -54,27 +54,24 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Transactional(value="miTransactionManager")
 	public void borrarUsuario(Usuario miUsuario) {
-		// TODO Auto-generated method stub
-		int i;
 		List<Cliente> c = usuarioDAO.findAllClientes();
-		for(i=0;i<c.size();i++){
-			if((c.get(i).getIdUsuario()==miUsuario.getIdUsuario())){
-				log.info("Remove cliente: " + miUsuario.toString());
-				c.get(i).setApps(null);
+		if(c.contains(miUsuario)){
+			try{
 				usuarioDAO.remove(miUsuario);
+			}catch(DataAccessException e){
+				log.error("Borrar programador con apps asociadas");
+				throw e;
 			}
 		}
-		
 		List<Programador> p = usuarioDAO.findAllProgramadores();
-		for(i=0;i<p.size();i++){
-			if((p.get(i).getIdUsuario()==miUsuario.getIdUsuario())&&(p.get(i).getApps().size()==0)){
-				log.info("Remove programador: " + miUsuario.toString());
+		if(p.contains(miUsuario)){
+			try{
 				usuarioDAO.remove(miUsuario);
-			}else{
-				log.error("Error borrar usuario: " + miUsuario.toString());
+			}catch(DataAccessException e){
+				log.error("Borrar programador con apps asociadas");
+				throw e;
 			}
 		}
-				
 	}
 
 	@Transactional(value="miTransactionManager")
@@ -154,12 +151,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Transactional(value="miTransactionManager")
 	public void borrarApp(App miApp) {
-		// TODO Auto-generated method stub
-		List<Cliente> c = appDAO.findAllClientes(miApp);
-		if (c.isEmpty()){
+		try{
 			appDAO.remove(miApp);
-		}else{
-			log.error("Error remove app: " + miApp.toString());
+		}catch(DataAccessException e){
+			log.error("clientes ligados a la App");
+			throw e;
 		}
 		
 	}
@@ -193,7 +189,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Transactional(value="miTransactionManager")
 	public void cancelarClientes(App miApp) {
-		// TODO Auto-generated method stub
 		List<Cliente> c = appDAO.findAllClientes(miApp);
 		for(int i=0;i<c.size();i++){
 			c.get(i).getApps().remove(miApp);
@@ -213,12 +208,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Transactional(value="miTransactionManager")
 	public void borrarVersion(Version miVersion) {
-		List<Version> v = versionDAO.findAllByApp(miVersion.getApp());
-		if (v.size()>1){
+		try{
 			versionDAO.remove(miVersion);
-		}else{
+		}catch(DataAccessException e){
 			log.error("Error borrar version. Ultima version");
-			throw new RuntimeException("Error borrar version");
+			throw e;
 		}
 	}
 

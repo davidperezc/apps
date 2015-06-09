@@ -83,11 +83,11 @@ public class TestAdmin {
 		
 		
 		// T5 Tratamos de eliminar un tipo de app con apps asociadas
-		/*
+		
 		Boolean intRef=false;
 		try {adminService.borrarTipoApp(adminService.buscarTipoAppPorNombre("Freeware"));} catch (DataIntegrityViolationException e) {intRef=true;}
 		assertTrue(intRef);
-		*/
+		
 		// T6 Borramos un tipo de app sin apps asociadas
 		
 		miTipoApp=adminService.buscarTipoAppPorNombre("Mocoware");
@@ -171,7 +171,7 @@ public class TestAdmin {
 		miLista.clear();
 		
 		// T6 Contamos aplicaciones de la categoria
-		/*
+		
 		Long numApps;
 		numApps = adminService.calcularNumAppsCategoria(testUtils.cat1);
 		assertEquals (new Long(3), numApps);
@@ -183,10 +183,9 @@ public class TestAdmin {
 		assertEquals (new Long(1), numApps);
 		numApps = adminService.calcularNumAppsCategoria(catA);
 		assertEquals (new Long(0), numApps);
-		*/
 		
 		// T7 Recuperamos aplicaciones de diferentes categorias, por orden de votos (inverso, de más a menos)
-		/*
+		
 		List<App> listaApps = adminService.buscarAppsCategoria(testUtils.cat1);
 		assertEquals(3, listaApps.size());
 		assertEquals(testUtils.app3, listaApps.get(0));
@@ -217,7 +216,7 @@ public class TestAdmin {
 		
 		assertEquals(0, adminService.buscarAppsCategoria(testUtils.cat22).size());
 		listaApps.clear();
-*/
+
 		// T8 Cambiar nombre de categoria
 
 		catA.setNombre("Cat A con nuevo nombre");

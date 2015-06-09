@@ -44,12 +44,12 @@ public class Categoria {
 	public String getNombre() {
 		return nombre;
 	}
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="CATEGORIA_MADRE")
 	public Categoria getmadre() {
 		return madre;
 	}
-	@OneToMany(mappedBy="madre",fetch=FetchType.LAZY,cascade={CascadeType.ALL})
+	@OneToMany(mappedBy="madre",fetch=FetchType.EAGER,cascade={CascadeType.ALL})
 	public Set<Categoria> getSubcategorias() {
 		return subcategorias;
 	}

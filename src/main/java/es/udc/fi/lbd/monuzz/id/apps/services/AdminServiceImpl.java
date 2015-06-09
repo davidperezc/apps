@@ -131,15 +131,14 @@ public class AdminServiceImpl implements AdminService{
 
 	@Transactional(value="miTransactionManager")
 	public Long calcularNumAppsCategoria(Categoria miCategoria) {
-		// TODO Auto-generated method stub
 		Long l=categoria.getNumApps(miCategoria);
 		return l;
 	}
 
 	@Transactional(value="miTransactionManager")
 	public List<App> buscarAppsCategoria(Categoria miCategoria) {
-		// TODO Auto-generated method stub
-		return null;
+		List<App> l = categoria.getApps(miCategoria);
+		return l;
 	}
 
 }

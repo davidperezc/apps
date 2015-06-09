@@ -75,7 +75,7 @@ public class CategoriaDaoImpl implements CategoriaDAO{
 
 	@Override
 	public Long getNumApps(Categoria miCategoria) {
-		Query query = sessionFactory.getCurrentSession().createQuery("select count(v) as num from Categoria v where v.madre=:iCat or v.idCategoria=:iID");
+		Query query = sessionFactory.getCurrentSession().createQuery("select count(a) from App a where a.categoria in (select v from Categoria v where v.madre=:iCat or v.idCategoria=:iID)");
 		query.setParameter("iCat", miCategoria);
 		query.setParameter("iID", miCategoria.getIdCategoria());
 		return (Long) query.uniqueResult();
@@ -83,8 +83,11 @@ public class CategoriaDaoImpl implements CategoriaDAO{
 
 	@Override
 	public List<App> getApps(Categoria miCategoria) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = sessionFactory.getCurrentSession().createQuery("from App a where a.categoria in (select v from Categoria v where v.madre=:iCat or v.idCategoria=:iID) order by a.categoria,a.precio DESC");
+		query.setParameter("iCat", miCategoria);
+		query.setParameter("iID", miCategoria.getIdCategoria());
+		List<App> l = query.list();
+		return l;
 	}
 
 }
